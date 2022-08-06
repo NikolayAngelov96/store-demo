@@ -1,3 +1,6 @@
+// 👇️ ts-nocheck disables type checking for entire file
+// @ts-nocheck
+
 import { PrismaClient } from "@prisma/client";
 
 interface CustomNodeJsGlobal extends NodeJS.Global {
