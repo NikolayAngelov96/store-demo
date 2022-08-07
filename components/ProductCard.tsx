@@ -12,7 +12,7 @@ export default function ProductCard() {
       <h2 className="text-3xl mb-2">$150.00</h2>
 
       <div className="my-4">Reviews 1</div>
-      <Link href="/kicks-id">
+      <Link href="/products/kicks-id">
         <a className="px-4 py-2 bg-gray-800 text-gray-100 text-sm rounded-full hover:bg-pink-400 shadow-md">
           View Details
         </a>
