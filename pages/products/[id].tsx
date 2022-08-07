@@ -1,6 +1,8 @@
 import { Product } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
+import Link from "next/link";
+
 import prisma from "../../db";
 
 interface ProductDetailsProps {
@@ -19,9 +21,11 @@ export default function ProductsDetails({ product }: ProductDetailsProps) {
         <p>{product.description}</p>
         <h2 className="text-4xl">${(product.price / 100).toFixed(2)}</h2>
         <div className="w-full">
-          <button className="px-4 py-2 bg-gray-800 text-gray-100 rounded-lg hover:bg-pink-400">
-            Buy now
-          </button>
+          <Link href={`/checkout/${product.id}`}>
+            <a className="px-4 py-2 bg-gray-800 text-gray-100 rounded-lg hover:bg-pink-400">
+              Buy now
+            </a>
+          </Link>
         </div>
       </div>
     </div>
