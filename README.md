@@ -1,9 +1,9 @@
 ## TODO
 
-1. Create product detail page
-2. Add Page for order
-3. Insert data in db
-4. Add cart
+1. Add Page for order
+2. Add cart
+3. add createdAt field in Order model
+4. display all orders in admin/orders page
 
 ## Deploy on Vercel
 
