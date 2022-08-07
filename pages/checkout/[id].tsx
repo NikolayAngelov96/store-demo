@@ -1,6 +1,7 @@
 import { Product } from "@prisma/client";
 import { GetServerSideProps } from "next";
-import ProductCard from "../../components/ProductCard";
+import Image from "next/image";
+import React from "react";
 import prisma from "../../db";
 
 interface CheckoutProps {
@@ -9,18 +10,24 @@ interface CheckoutProps {
 
 export default function Checkout({ product }: CheckoutProps) {
   return (
-    <div>
-      <ProductCard product={product} />
-
+    <div className="flex justify-center gap-10">
       <div>
-        <form>
-          <input type="text" placeholder="First Name" />
-          <input type="text" placeholder="Last Name" />
-          <input type="text" placeholder="Address" />
-          <input type="text" placeholder="Phone Number" />
+        <div className="flex gap-4 border-b border-gray-800 items-center">
+          <div>
+            <Image src={product.image} width={50} height={50} alt="" />
+          </div>
+          <h3>{product.name}</h3>
+          <h2>${(product.price / 100).toFixed(2)}</h2>
+        </div>
 
-          <button>Order now</button>
-        </form>
+        <div className="flex gap-2 justify-between mt-4">
+          <p>Total:</p>
+          <h2>${(product.price / 100).toFixed(2)}</h2>
+        </div>
+      </div>
+
+      <div className="w-1/2">
+        <OrderForm />
       </div>
     </div>
   );
@@ -39,3 +46,47 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: { product },
   };
 };
+
+function OrderForm() {
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target as any);
+
+    const { firstName, lastName, address, phoneNumber } =
+      Object.fromEntries(formData);
+
+    console.log(firstName, lastName, address, phoneNumber);
+  };
+
+  return (
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+      <input
+        className="rounded px-4 py-2"
+        type="text"
+        placeholder="First Name"
+        name="firstName"
+      />
+      <input
+        className="rounded px-4 py-2"
+        type="text"
+        placeholder="Last Name"
+        name="lastName"
+      />
+      <input
+        className="rounded px-4 py-2"
+        type="text"
+        placeholder="Address"
+        name="address"
+      />
+      <input
+        className="rounded px-4 py-2"
+        type="text"
+        placeholder="Phone Number"
+        name="phoneNumber"
+      />
+
+      <button className="px-2 py-4 rounded bg-pink-400">Order now</button>
+    </form>
+  );
+}
