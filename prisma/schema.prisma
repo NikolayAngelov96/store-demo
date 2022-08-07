@@ -17,7 +17,8 @@ model Customer {
   email     String
   address   String
   products  Product[]
-  Review    Review[]
+  reviews   Review[]
+  orders    Order[]
 }
 
 model Product {
@@ -27,7 +28,7 @@ model Product {
   image       String
   price       Int
   customers   Customer[]
-  Review      Review[]
+  reviews     Review[]
 }
 
 model Review {
@@ -38,4 +39,15 @@ model Review {
   customerId String
   rating     Int
   text       String
+}
+
+model Order {
+  id          String    @id @default(cuid())
+  firstName   String
+  lastName    String
+  address     String
+  phoneNumber String
+  totalPrice  Int
+  customer    Customer? @relation(fields: [customerId], references: [id])
+  customerId  String?
 }
