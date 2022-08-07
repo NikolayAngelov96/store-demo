@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 function OrderForm() {
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     const formData = new FormData(e.target as any);
@@ -56,7 +56,19 @@ function OrderForm() {
     const { firstName, lastName, address, phoneNumber } =
       Object.fromEntries(formData);
 
-    console.log(firstName, lastName, address, phoneNumber);
+    const res = await fetch("/api/checkout", {
+      method: "POST",
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        address,
+        phoneNumber,
+        totalPrice: 7500,
+      }),
+    });
+
+    // add data type:  ex. data.order.firstName
+    const data = await res.json();
   };
 
   return (
