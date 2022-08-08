@@ -11,43 +11,41 @@ datasource db {
 }
 
 model Customer {
-  id        String    @id @default(cuid())
-  firstName String
-  lastName  String
-  email     String
-  address   String
-  products  Product[]
-  reviews   Review[]
-  orders    Order[]
+  id          String  @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String  @unique
+  address     String?
+  phoneNumber String?
+  orders      Order[]
 }
 
 model Product {
-  id          String     @id @default(cuid())
-  name        String
-  description String
-  image       String
-  price       Int
-  customers   Customer[]
-  reviews     Review[]
-}
-
-model Review {
-  id         String   @id @default(cuid())
-  product    Product  @relation(fields: [productId], references: [id])
-  productId  String
-  customer   Customer @relation(fields: [customerId], references: [id])
-  customerId String
-  rating     Int
-  text       String
+  id               String            @id @default(cuid())
+  image            String
+  price            Int
+  name             String
+  description      String
+  productsQuantity ProductQuantity[]
 }
 
 model Order {
-  id          String    @id @default(cuid())
-  firstName   String
-  lastName    String
-  address     String
-  phoneNumber String
-  totalPrice  Int
-  customer    Customer? @relation(fields: [customerId], references: [id])
-  customerId  String?
+  id               String            @id @default(cuid())
+  firstName        String
+  lastName         String
+  address          String
+  phoneNumber      String
+  customer         Customer?         @relation(fields: [customerId], references: [id])
+  customerId       String?
+  totalPrice       Int
+  productsQuantity ProductQuantity[]
+}
+
+model ProductQuantity {
+  id        String  @id @default(cuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String
 }
